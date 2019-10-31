@@ -1,0 +1,47 @@
+{
+  "name": "ali-oss-uploader",
+  "version": "1.0.0",
+  "description": "ali-oss-uploader",
+  "main": "lib/ali-oss-uploader.js",
+  "types": "types/index.d.ts",
+  "repository": "https://github.com/github:zhang0ZGC/ali-oss-uploader",
+  "author": "zhang0ZGC",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf lib dist coverage types",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepare": "npm run clean && npm test"
+  },
+  "dependencies": {
+    "mime": "^2.4.4",
+    "spark-md5": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@types/jest": "^24.0.19",
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.25.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-filesize": "^6.2.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-jest": "^24.1.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.4"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "src",
+    "types",
+    "jest.config.js",
+    "tsconfig.json",
+    "README.md"
+  ],
+  "sideEffects": false
+}
