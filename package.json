@@ -1,10 +1,12 @@
 {
-  "name": "ali-oss-uploader",
+  "name": "alioss-web-uploader",
   "version": "1.0.0",
-  "description": "ali-oss-uploader",
-  "main": "lib/ali-oss-uploader.js",
+  "description": "Upload file or add object to Ali OSS in browser.",
+  "main": "lib/alioss-web-uploader.js",
   "types": "types/index.d.ts",
-  "repository": "https://github.com/github:zhang0ZGC/ali-oss-uploader",
+  "unpkg": "dist/alioss-web-uploader",
+  "homepage": "https://github.com/zhang0ZGC/alioss-web-uploader",
+  "repository": "github:zhang0ZGC/alioss-web-uploader",
   "author": "zhang0ZGC",
   "license": "MIT",
   "scripts": {
@@ -13,10 +15,6 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "prepare": "npm run clean && npm test"
-  },
-  "dependencies": {
-    "mime": "^2.4.4",
-    "spark-md5": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

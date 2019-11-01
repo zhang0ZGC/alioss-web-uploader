@@ -3,9 +3,9 @@
  * Thanks the authors.
  */
 
-type UploadProgressEvent = ProgressEvent & {percent: number};
+export type UploadProgressEvent = ProgressEvent & {percent: number};
 
-interface RequestResult {
+export interface RequestResult {
   status: number;
   statusText: string;
   data: any,
@@ -30,9 +30,10 @@ export interface RequestOptions {
 
 function getError(url, option, xhr) {
   const codePart = xhr.response.match(/<Code>(.+)<\/Code>/);
+  // const messagePart = xhr.response.match(/<Message>(.+)<\/<Message>>/);
 
   const method = option.method || 'GET';
-  const msg = `[${xhr.status}] Cannot ${method} ${url}': ${codePart && codePart[1] || ''}`;
+  const msg = `[${xhr.status}] ${method} ${url}': ${codePart && codePart[1] || ''}`;
   const err: Error & {status?: number; method?: string; url?: string; code?:string} = new Error(msg);
   err.status = xhr.status;
   err.method = method;
@@ -95,9 +96,16 @@ export default function request (url: string, options: RequestOptions) {
     options.onSuccess(result, xhr);
   };
 
-  xhr.ontimeout = function timeout(e){
+  xhr.ontimeout = function timeout(ev){
+    const err: Error = new Error(`Request timeout, limit ${xhr.timeout} ms.`);
+    options.onError(err);
+  };
+
+  /*
+  xhr.onabort = function timeout(e){
     options.onError(e);
   };
+  */
 
   xhr.open(options.method || 'get', url, true);
 

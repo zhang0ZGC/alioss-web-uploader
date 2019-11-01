@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>alioss-web-uploader</title>
+  <meta name="viewport" content="width=device-width"/>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .main {
+      width: 320px;
+      margin: 5% auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      height: 32px;
+      margin: 5px 0;
+      padding: 0 3px;
+      border-radius: 3px;
+      border: solid 1px #cccccc;
+    }
+
+    .upload-wrap {
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .upload-wrap button {
+      height: 32px;
+      width: 100%;
+      background: #2087d5;
+      color: #fff;
+      border: none;
+      /*background: #ffffff;*/
+      /*border: solid 1px #ccc;*/
+      border-radius: 4px;
+    }
+
+    .upload-wrap button:hover {
+      cursor: pointer;
+      height: 32px;
+      width: 100%;
+      background: #2087d5;
+      border: solid 1px #ccc;
+    }
+    .percent-wrap{
+      height: 18px;
+      border: solid 1px #cccccc;
+      position: relative;
+      font-size: 12px;
+    }
+    .percent-value,.percent-progress{
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .percent-progress{
+      height: 100%;
+      background: #2087d5;
+      transition: all .3s;
+      text-align: right;
+      color: #ffffff;
+      padding-right: 2px;
+      text-shadow: 0 0 3px #333;
+    }
+    .percent-progress.success{
+      background: #00bf75;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main">
+  <label for="region">
+    <div>region:</div>
+    <input id="region" value="oss-cn-shanghai" placeholder="region"/>
+  </label>
+  <label for="bucket">
+    <div>bucket:</div>
+    <input id="bucket" placeholder="your bucket" />
+  </label>
+  <label for="accessKeyId">
+    <div>accessKeyId:</div>
+    <input id="accessKeyId" placeholder="your accessKeyId" />
+  </label>
+  <label for="accessKeySecret">
+    <div>accessKeySecret:</div>
+    <input id="accessKeySecret" placeholder="your accessKeySecret" />
+  </label>
+  <input type="file" id="file" style="border: none"/>
+  <label for="objectName">
+    <div>objectName:</div>
+    <input id="objectName" placeholder="the object name saved on AliOSS"/>
+  </label>
+
+  <div class="upload-wrap">
+    <button id="upload">UPLOAD</button>
+  </div>
+  <div class="percent-wrap" style="display: none">
+    <div class="percent-progress"></div>
+  </div>
+</div>
+
+<script src="../dist/alioss-web-uploader.js"></script>
+<script>
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+
+    var uploadFile = $("#file"), percent=$(".percent-progress"),btn = $("#upload");
+
+    uploadFile.addEventListener('change', function (e) {
+        uploadFile = e.target.files[0];
+        var filename = e.target.value;
+        $("#objectName").value = filename.split(/[\/\\]/).pop();
+    });
+
+    btn.addEventListener('click', function () {
+        var region = $("#region").value,
+            bucket = $("#bucket").value,
+            accessKeyId = $("#accessKeyId").value,
+            accessKeySecret = $("#accessKeySecret").value,
+            objectName = $("#objectName").value;
+        if (!region || !bucket || !accessKeyId || !accessKeySecret || !objectName) {
+            alert('some input value is empty');
+            return;
+        }
+
+        $(".percent-wrap").style.display = 'block';
+        // percent.className = "percent-progress";
+        percent.classList.remove('success');
+        percent.style.width = '0px';
+
+        var client = new AliOSSWebUploader({
+            region: region,
+            bucket: bucket,
+            accessKeyId: accessKeyId,
+            accessKeySecret: accessKeySecret,
+        });
+
+        client.postObject(objectName, uploadFile,  {
+            'x-oss-object-acl': 'public-read',
+            'success_action_status': 200,
+            timeout: 30000,
+            onProgress: function (e) {
+                console.log('complete', e.percent.toFixed(2), '%');
+                percent.style.width = e.percent.toFixed(2) + '%';
+                // percentValue.innerHTML = e.percent.toFixed(2) + '%';
+                percent.innerHTML = e.percent.toFixed(2) + '%';
+            },
+            onSuccess: function(){
+                // percent.className = "percent-progress success";
+                percent.classList.add('success');
+                percent.innerHTML = 'completed';
+                // percentValue.innerHTML = 'completed';
+                console.log('upload success');
+            },
+            onError: function(e){
+                alert(e.message || "Unknow error, maybe some value is wrong.");
+                console.warn(e);
+            }
+        });
+    });
+</script>
+</body>
+</html>

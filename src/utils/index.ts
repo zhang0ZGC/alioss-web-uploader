@@ -1,9 +1,13 @@
 /**
- * 名字前面的/全去掉
+ * remove ^\/+
  * @param name
  */
 export function objectName(name: string) {
   return name.replace(/^\/+/, '');
+}
+
+export function escapeName(name: string) {
+  return encodeURIComponent(name).replace(/%2F/g, '/');
 }
 
 export function isHttpsProtocol() {

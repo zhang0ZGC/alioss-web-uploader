@@ -1,5 +1,9 @@
 import {rstr2hex, rstr2b64, rstr2any, utf8Encode, binb2rstr, rstr2binb, safe_add, bit_rol} from "./utils";
 
+/**
+ * Copy from https://github.com/h2non/jshashes/blob/master/hashes.js
+ */
+
 const SHA1 = function SHA1 (options?) {
   /**
    * Private config properties. You may need to tweak these to be compatible with

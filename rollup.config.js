@@ -9,13 +9,14 @@ import {terser} from 'rollup-plugin-terser'
 
 // const env = process.env.NODE_ENV;
 const noDeclarationFiles = {compilerOptions: {declaration: false}};
+const pkgName = 'alioss-web-uploader';
 
 const config = [
   // CommonJS
   {
     input: 'src/index.ts',
     output: {
-      file: 'lib/ali-oss-uploader.js',
+      file: `lib/${pkgName}.js`,
       format: 'cjs',
       indent: false,
     },
@@ -31,9 +32,9 @@ const config = [
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/ali-oss-uploader.min.js',
+      file: `dist/${pkgName}.min.js`,
       format: 'umd',
-      name: 'AliOSSUploader',
+      name: 'AliOSSWebUploader',
       indent: false,
       sourcemap: true,
     },
@@ -64,9 +65,9 @@ const config = [
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/ali-oss-uploader.js',
+      file: `dist/${pkgName}.js`,
       format: 'umd',
-      name: 'AliOSSUploader',
+      name: 'AliOSSWebUploader',
       sourcemap: true,
       // footer: '/* @see https://github.com */',
     },
