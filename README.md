@@ -1,6 +1,9 @@
 # alioss-web-uploader
+[![NPM version](https://img.shields.io/npm/v/alioss-web-uploader.svg)](https://www.npmjs.com/package/alioss-web-uploader)
+[![min size](https://img.shields.io/bundlephobia/min/alioss-web-uploader)](https://unpkg.com/browse/alioss-web-uploader/dist/)
+[![min+gzip size](https://img.shields.io/bundlephobia/minzip/alioss-web-uploader)](https://unpkg.com/alioss-web-uploader@1.0.7/dist/alioss-web-uploader.min.js)
 
-用于在浏览器端直传文件到阿里 OSS
+在浏览器端直传文件到阿里 OSS
 
 [在线 DEMO](https://unpkg.com/alioss-web-uploader/example/index.html)
 
