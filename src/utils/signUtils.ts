@@ -1,4 +1,4 @@
-import {typeOf} from "@/utils";
+import {typeOf} from "./index";
 import SHA1 from "./hash/sha1";
 
 

@@ -1,7 +1,7 @@
-import {escapeName, isHttpsProtocol, objectName} from "@/utils";
-import {rstr2b64, utf8Encode} from "@/utils/hash/utils";
-import request, {RequestOptions, RequestResult, UploadProgressEvent} from "@/utils/request";
-import {computeSignature} from "@/utils/signUtils";
+import {escapeName, isHttpsProtocol, objectName} from "./utils";
+import {rstr2b64, utf8Encode} from "./utils/hash/utils";
+import request, {RequestOptions, RequestResult, UploadProgressEvent} from "./utils/request";
+import {computeSignature} from "./utils/signUtils";
 
 function getOssParams(params, extendKeys=[]){
   const out = {};
