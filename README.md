@@ -32,7 +32,7 @@ __options__：
 * [stsToken] {String} used by temporary authorization, detail [see](https://www.alibabacloud.com/help/doc-detail/32077.htm)
 * [endpoint] {String} oss region domain. It takes priority over region.
 * [region] {String} default `oss-cn-hangzhou`, see [Data Regions](https://github.com/ali-sdk/ali-oss#data-regions)
-* [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。__ 注意：不要在 HTTPS 页面中设置为 `false` __（设置了也没用）
+* [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。 **注意：不要在 HTTPS 页面中设置为 `false`**（设置了也没用）
 * [timeout] {Number} default 300_000
 * ~~[cname] {String} default false, access oss with custom domain name. if true, you can fill endpoint field with your custom domain name~~
 * [internal] {Boolean} default false
