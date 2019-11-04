@@ -40,6 +40,9 @@
     function escapeName(name) {
         return encodeURIComponent(name).replace(/%2F/g, '/');
     }
+    function isHttpsProtocol() {
+        return location && location.protocol === 'https:';
+    }
 
     // unescape(encodeURIComponent(str))
     function utf8Encode(str) {
@@ -465,7 +468,9 @@
             if (!options.bucket) {
                 throw new Error('bucket is required.');
             }
-            var opts = __assign(__assign({ endpoint: null, region: 'oss-cn-hangzhou', timeout: 300000, internal: false, cname: false, secure: false }, options), { host: '' });
+            var opts = __assign(__assign({ endpoint: null, region: 'oss-cn-hangzhou', timeout: 300000, internal: false, 
+                // cname: false,
+                secure: undefined }, options), { host: '' });
             if (opts.endpoint) ;
             else if (opts.region) {
                 opts.endpoint = opts.bucket;
@@ -476,7 +481,8 @@
             else {
                 throw new Error('require options.endpoint or options.region');
             }
-            opts.host = "http" + (opts.secure ? 's' : '') + "://" + opts.endpoint;
+            // 一般情况下不需要设置 `secure` 参数，唯一需要用到的场景可能就是在 http 页面中使用 https 连接了
+            opts.host += "http" + (opts.secure === true || isHttpsProtocol() ? 's' : '') + "://" + opts.endpoint;
             this.opts = opts;
         }
         /*
