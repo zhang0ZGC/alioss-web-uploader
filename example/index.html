@@ -56,6 +56,7 @@
       border: solid 1px #cccccc;
       position: relative;
       font-size: 12px;
+      margin: 12px 0;
     }
     .percent-value,.percent-progress{
       position: absolute;
@@ -108,6 +109,7 @@
   <div class="percent-wrap" style="display: none">
     <div class="percent-progress"></div>
   </div>
+  <div class="result"></div>
 </div>
 
 <!--<script src="https://unpkg.com/alioss-web-uploader"></script>-->
@@ -163,6 +165,8 @@
                 percent.classList.add('success');
                 percent.innerHTML = 'completed';
                 // percentValue.innerHTML = 'completed';
+                var url = client.generateObjectUrl(objectName);
+                $(".result").innerHTML = 'Object url: <a target="_blank" href="'+url+'">'+url+'</a>';
                 console.log('upload success');
             },
             onError: function(e){
