@@ -1,6 +1,8 @@
 # alioss-web-uploader
 
-用于在浏览器端上传文件到阿里 OSS
+用于在浏览器端直传文件到阿里 OSS
+
+[在线 DEMO](https://unpkg.com/alioss-web-uploader/example/index.html)
 
 ## 兼容性
 
@@ -24,15 +26,15 @@ npm install alioss-web-uploader
 
 ### oss(options)
 __options__：
-* accessKeyId
-* accessKeySecret
-* bucket
-* [stsToken] {String}
-* [endpoint] {String}
-* [region] {String} default `oss-cn-hangzhou`
-* [secure] {Boolean} defailt false
+* accessKeyId {String}
+* accessKeySecret {String}
+* bucket {String} the bucket you want to access
+* [stsToken] {String} used by temporary authorization, detail [see](https://www.alibabacloud.com/help/doc-detail/32077.htm)
+* [endpoint] {String} oss region domain. It takes priority over region.
+* [region] {String} default `oss-cn-hangzhou`, see [Data Regions](https://github.com/ali-sdk/ali-oss#data-regions)
+* [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。__ 注意：不要在 HTTPS 页面中设置为 `false` __（设置了也没用）
 * [timeout] {Number} default 300_000
-* [cname] {String} default false
+* ~~[cname] {String} default false, access oss with custom domain name. if true, you can fill endpoint field with your custom domain name~~
 * [internal] {Boolean} default false
   
 参数详情查看 [配置项](https://help.aliyun.com/document_detail/64095.html).
