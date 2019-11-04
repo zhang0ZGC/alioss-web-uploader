@@ -1,4 +1,4 @@
-import {escapeName, objectName} from "@/utils";
+import {escapeName, isHttpsProtocol, objectName} from "@/utils";
 import {rstr2b64, utf8Encode} from "@/utils/hash/utils";
 import request, {RequestOptions, RequestResult, UploadProgressEvent} from "@/utils/request";
 import {computeSignature} from "@/utils/signUtils";
@@ -81,13 +81,13 @@ class Client {
       region: 'oss-cn-hangzhou',
       timeout: 300_000,
       internal: false,
-      cname: false,
-      secure: false,
+      // cname: false,
+      secure: undefined,
       ...options,
       host: '',
     };
     if (opts.endpoint) {
-
+      // if set custom endpoint
     } else if (opts.region) {
       opts.endpoint = opts.bucket;
       if (opts.internal) opts.endpoint += '-internal';
@@ -95,7 +95,8 @@ class Client {
     } else {
       throw new Error('require options.endpoint or options.region');
     }
-    opts.host = `http${opts.secure?'s':''}://${opts.endpoint}`;
+    // 一般情况下不需要设置 `secure` 参数，唯一需要用到的场景可能就是在 http 页面中使用 https 连接了
+    opts.host += `http${opts.secure === true || isHttpsProtocol() ? 's' : ''}://${opts.endpoint}`;
     this.opts = opts;
   }
 
