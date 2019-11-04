@@ -4,7 +4,7 @@
   "description": "Upload file or add object to Ali OSS in browser.",
   "main": "lib/alioss-web-uploader.js",
   "types": "types/index.d.ts",
-  "unpkg": "dist/alioss-web-uploader",
+  "unpkg": "dist/alioss-web-uploader.js",
   "homepage": "https://github.com/zhang0ZGC/alioss-web-uploader",
   "repository": "github:zhang0ZGC/alioss-web-uploader",
   "author": "zhang0ZGC",
@@ -14,7 +14,8 @@
     "clean": "rimraf lib dist coverage types",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "prepare": "npm run clean && npm test"
+    "prepare": "npm run clean && npm test",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -34,10 +35,10 @@
   },
   "files": [
     "dist",
+    "example",
     "lib",
     "src",
     "types",
-    "jest.config.js",
     "tsconfig.json",
     "README.md"
   ],
