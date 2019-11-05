@@ -9,19 +9,17 @@
 
 ## 兼容性
 
-理论上支持 FormData API 的浏览器都可以。兼容性见： [https://caniuse.com/#feat=mdn-api_formdata](https://caniuse.com/#feat=mdn-api_formdata)
-
-IE 系列因不支持 `xhr.upload` 属性，所以 `onProgress` 上传进度回调不可用
+理论上支持 FormData API 的浏览器都可以(IE 10+)。详细兼容性见： [https://caniuse.com/#feat=mdn-api_formdata](https://caniuse.com/#feat=mdn-api_formdata)
 
 更多浏览器支持可参阅相关官方文档提供的方案： [JavaScript客户端签名直传](https://help.aliyun.com/document_detail/31925.html)
 
 ## 安装
-```bash
+```shell script
 yarn add alioss-web-uploader
 ```
 or
 
-```npm
+```shell script
 npm install alioss-web-uploader
 ```
 
@@ -42,7 +40,7 @@ __options__：
   
 参数详情查看 [配置项](https://help.aliyun.com/document_detail/64095.html).
 
-```
+```js
 const oss = require('alioss-web-uploader');
 
 // or `const client = oss({...})`
@@ -55,19 +53,25 @@ const client = new oss({
 ```
 
 #### .postObject(name, file[, options])
-添加object
+通过`postObject`接口添加object
 
-参数:
+参数: object
 * name {string} 对象名称
 * file {File|Blob} 上传的 Blob 或 html5 File
 * [options] {Object} 可选参数
+  * [onProgress] {Function} 上传进度回调。(IE 系列因不支持 `xhr.upload` 属性，所以回调不会被执行)
+  * [onSuccess] {Function} 成功回调
+  * [onError] {Function} 错误回调
   * [timeout] {Number} 超时时间，单位 ms, 默认 `client.opts.timeout` 300s
-  * [policy] {Object|String} policy对象或 json 字符串的 base64
-  * [signature] {String} policyBase64签名，通常不需要传，因为会自动计算签名
-  * [x-oss-object-acl] {String} 指定OSS创建Object时的访问权限。合法值：public-read、private、public-read-write
-  * [x-oss-meta-*] 用户指定的user meta值。
+  * [policy] {Object|String} policy 对象或 json 字符串的 base64
+  * [signature] {String} policyBase64 签名，通常不需要传，因为会自动计算签名
+  * [x-oss-object-acl] {String} 指定 OSS 创建 Object 时的访问权限。合法值：public-read、private、public-read-write
+  * [x-oss-meta-*] 用户指定的 user meta 值。
   * [x-oss-*] 
-  * [更多参数](https://help.aliyun.com/document_detail/31988.html)
+  * ![更多参数](https://help.aliyun.com/document_detail/31988.html)
+  
+返回: object
+* abort {Function} 可用于中断上传
 
 ```js
 const blob = new Blob(['hello world'], {type: 'text/plain'});
@@ -81,7 +85,7 @@ const uploader = client.postObject('hello/world.txt', blob, options);
 // uploader.abort()
 ```
 
-__在浏览器中直接使用__ 见 `example` 文件夹
+__在浏览器中直接使用__ 见 `example` 文件夹或查看 __在线 demo__
 
 #### .generateObjectUrl(name[, baseUrl])
 获取对象 url.
