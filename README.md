@@ -68,7 +68,7 @@ const client = new oss({
   * [x-oss-object-acl] {String} 指定 OSS 创建 Object 时的访问权限。合法值：public-read、private、public-read-write
   * [x-oss-meta-*] 用户指定的 user meta 值。
   * [x-oss-*] 
-  * ![更多参数](https://help.aliyun.com/document_detail/31988.html)
+  * [更多参数](https://help.aliyun.com/document_detail/31988.html)
   
 返回: object
 * abort {Function} 可用于中断上传
