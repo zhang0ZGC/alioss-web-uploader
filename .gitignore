@@ -1,6 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 node_modules
+dist
+lib
+types
 temp
 coverage
 src/**/*.js
