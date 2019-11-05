@@ -1,4 +1,4 @@
-import {isHttpsProtocol, objectName, setRegion, typeOf} from "./index";
+import {escapeName, isHttpsProtocol, objectName, setRegion, typeOf} from "./index";
 
 describe("utils test", () => {
   it("objectName test", () => {
@@ -7,6 +7,12 @@ describe("utils test", () => {
     expect(objectName('/a/test.txt')).toBe('a/test.txt');
     expect(objectName('//a/test.txt')).toBe('a/test.txt');
     expect(objectName('a/test.txt')).toBe('a/test.txt');
+  });
+
+  it("escapeName test", () => {
+    expect(escapeName("foo")).toBe('foo');
+    expect(escapeName("foo/bar")).toBe('foo/bar');
+    expect(escapeName('foo/中文.test')).toBe('foo/%E4%B8%AD%E6%96%87.test')
   });
 
   it('isHttpsProtocol', function () {
