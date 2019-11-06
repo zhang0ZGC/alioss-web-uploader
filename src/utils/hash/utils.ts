@@ -1,5 +1,9 @@
 // unescape(encodeURIComponent(str))
 export function utf8Encode(str) {
+  return unescape(encodeURIComponent(str));
+}
+/*
+export function utf8Encode(str) {
   let x, y, output = '',
     i = -1,
     l;
@@ -7,14 +11,14 @@ export function utf8Encode(str) {
   if (str && str.length) {
     l = str.length;
     while ((i += 1) < l) {
-      /* Decode utf-16 surrogate pairs */
+      /!* Decode utf-16 surrogate pairs *!/
       x = str.charCodeAt(i);
       y = i + 1 < l ? str.charCodeAt(i + 1) : 0;
       if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
         x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
         i += 1;
       }
-      /* Encode output as utf-8 */
+      /!* Encode output as utf-8 *!/
       if (x <= 0x7F) {
         output += String.fromCharCode(x);
       } else if (x <= 0x7FF) {
@@ -34,8 +38,13 @@ export function utf8Encode(str) {
   }
   return output;
 }
+*/
 
-// decodeURLComponent(escape(str))
+// decodeURIComponent(escape(str))
+export function utf8Decode(str) {
+  return decodeURIComponent(escape(str));
+}
+/*
 export function utf8Decode(str) {
   let i, ac, c1, c2, c3, arr = [],
     l;
@@ -65,6 +74,7 @@ export function utf8Decode(str) {
   }
   return arr.join('');
 }
+*/
 
 /**
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
