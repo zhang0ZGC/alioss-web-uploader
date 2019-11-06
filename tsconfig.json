@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    //      "module": "es6",
-    "target": "es5",
+     "target": "es5",
+//    "target": "es6",
     //  "strict": true,
     "sourceMap": true,
-    "locale": "zh-CN",
-    "outDir": "./dist",
+//    "outDir": "./dist",
     // moduleResolution:node:`folder/index` can short to `folder`
     "moduleResolution": "node",
     "lib": [
@@ -21,8 +20,8 @@
         "src/*"
       ]
     },
+    "removeComments": false,
     "declaration": true,
-    // "removeComments": true,
     "declarationDir": "./types"
   },
   "exclude": [
