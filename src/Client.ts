@@ -14,7 +14,7 @@ function getOssParams(params, extendKeys=[]){
   return out;
 }
 
-interface ClientOptions {
+export interface ClientOptions {
   /**
    * access key you create on aliyun console website
    */
@@ -53,7 +53,7 @@ interface ClientOptions {
   // isRequestPay?: boolean;
 }
 
-interface PostObjectOptions {
+export interface PostObjectOptions {
   policy?: string | {[key: string]: any};
   signature?: string;
   timeout?: number;
@@ -62,7 +62,7 @@ interface PostObjectOptions {
   onError?: (e: Error) => void;
   success_action_status?: number;
   success_action_redirect?: string;
-  'x-oss-object-acl'?: string;
+  'x-oss-object-acl'?: 'private' | 'public-read' | 'public-read-write';
   [key: string]: any;
 }
 
