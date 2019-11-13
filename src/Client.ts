@@ -74,9 +74,6 @@ class Client {
     if (!(this instanceof Client)) {
       return new Client(options);
     }
-    if (!options.bucket) {
-      throw new Error('bucket is required.');
-    }
     const opts = {
       endpoint: null,
       region: 'oss-cn-hangzhou',
@@ -87,6 +84,7 @@ class Client {
       ...options,
       host: '',
     };
+    if (!opts.bucket) throw new Error('bucket is required.');
     if (opts.endpoint) {
       // if set custom endpoint
     } else if (opts.region) {
@@ -113,7 +111,7 @@ class Client {
    * @param file
    * @param options
    */
-  public postObject(name: string, file: File | Blob, options?: PostObjectOptions) {
+  public postObject(name: string, file: File | Blob, options: PostObjectOptions={}) {
     if (!options.policy) options.policy = {};
     let policyBase64;
 
