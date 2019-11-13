@@ -5,13 +5,13 @@
 
 在浏览器端直传文件到阿里 OSS
 
-[在线 DEMO](https://unpkg.com/alioss-web-uploader/example/index.html)
+[在线 DEMO][^demo_online]
 
 ## 兼容性
 
 理论上支持 FormData API 的浏览器都可以(IE 10+)。详细兼容性见： [https://caniuse.com/#feat=mdn-api_formdata](https://caniuse.com/#feat=mdn-api_formdata)
 
-更多浏览器支持可参阅相关官方文档提供的方案： [JavaScript客户端签名直传](https://help.aliyun.com/document_detail/31925.html)
+> 更多浏览器支持可参阅相关官方文档提供的方案： [JavaScript客户端签名直传](https://help.aliyun.com/document_detail/31925.html)
 
 ## 安装
 ```shell script
@@ -69,6 +69,12 @@ const client = new oss({
   * [x-oss-meta-*] 用户指定的 user meta 值。
   * [x-oss-*] 
   * [更多参数](https://help.aliyun.com/document_detail/31988.html)
+  * [headers] {Object} 上传的 object header 信息，详情见 [RFC2616][^RFC2616] 
+  ([中文][^RFC2616_ZH])
+    * 'Cache-Control' cache control for download, e.g.: Cache-Control: public, no-cache
+    * 'Content-Disposition' object name for download, e.g.: Content-Disposition: somename
+    * 'Content-Encoding' object content encoding for download, e.g.: Content-Encoding: gzip
+    * 'Expires' expires time (milliseconds) for download, e.g.: Expires: 3600000
   
 返回: object
 * abort {Function} 可用于中断上传
@@ -85,10 +91,10 @@ const uploader = client.postObject('hello/world.txt', blob, options);
 // uploader.abort()
 ```
 
-__在浏览器中直接使用__ 见 `example` 文件夹或查看 __在线 demo__
+__在浏览器中直接使用__ 见 `example` 文件夹或查看 [在线 demo][^demo_online]
 
 #### .generateObjectUrl(name[, baseUrl])
-获取对象 url.
+获取对象 url，如果 object 设置的 ACL 权限为 `public-read` 或 `public-read-write`，可通过此 url 直接下载文件。
 
 参数:
 * name {String} 对象名称
@@ -110,3 +116,7 @@ client.generateObjectUrl('hello/world.txt', 'http://mycdn.domain.com');
 - [ ] signatureUrl 
 - [ ] putObject
 - [ ] iframe upload
+
+[^demo_online]: https://unpkg.com/alioss-web-uploader/example/index.html
+[^RFC2616]: http://www.w3.org/Protocols/rfc2616/rfc2616.html
+[^RFC2616_ZH]: https://www.cnblogs.com/k1988/archive/2010/01/12/2165683.html
