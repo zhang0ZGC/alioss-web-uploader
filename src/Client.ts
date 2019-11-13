@@ -60,9 +60,10 @@ export interface PostObjectOptions {
   onProgress?: (e: UploadProgressEvent) => void;
   onSuccess?: (result: RequestResult) => void;
   onError?: (e: Error) => void;
-  success_action_status?: number;
+  success_action_status?: 200|201|204;
   success_action_redirect?: string;
   'x-oss-object-acl'?: 'private' | 'public-read' | 'public-read-write';
+  headers?: {[key: string]: string | number},
   [key: string]: any;
 }
 
@@ -117,6 +118,11 @@ class Client {
     let policyBase64;
 
     const data = new FormData();
+
+    Object.keys(options.headers || {}).forEach(key => {
+      data.append(key, options.headers[key].toString());
+    });
+
     data.append('key', objectName(name));
 
     if (this.opts.accessKeyId && this.opts.accessKeySecret){
