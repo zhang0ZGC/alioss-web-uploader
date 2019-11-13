@@ -6,17 +6,18 @@ import filesize from 'rollup-plugin-filesize';
 // import analyze from 'rollup-plugin-analyzer'
 // import { uglify } from 'rollup-plugin-uglify'
 import {terser} from 'rollup-plugin-terser'
+import pkg from './package.json';
 
 // const env = process.env.NODE_ENV;
 const noDeclarationFiles = {compilerOptions: {declaration: false}};
-const pkgName = 'alioss-web-uploader';
+const name = 'AliOSSWebUploader';
 
 const config = [
   // CommonJS
   {
     input: 'src/index.ts',
     output: {
-      file: `lib/${pkgName}.js`,
+      file: pkg.module,
       format: 'cjs',
       indent: false,
     },
@@ -28,13 +29,29 @@ const config = [
     ]
   },
 
+  // ES
+  {
+    input: 'src/index.ts',
+    output: {
+      file: pkg.es2015,
+      format: 'es',
+      indent: false,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript({tsconfigOverride: noDeclarationFiles}),
+      babel(),
+    ]
+  },
+
   // UMD production
   {
     input: 'src/index.ts',
     output: {
-      file: `dist/${pkgName}.min.js`,
+      file: pkg.main.replace(/.js$/, '.min.js'),
       format: 'umd',
-      name: 'AliOSSWebUploader',
+      name,
       indent: false,
       sourcemap: true,
     },
@@ -65,9 +82,9 @@ const config = [
   {
     input: 'src/index.ts',
     output: {
-      file: `dist/${pkgName}.js`,
+      file: pkg.main,
       format: 'umd',
-      name: 'AliOSSWebUploader',
+      name,
       sourcemap: true,
       // footer: '/* @see https://github.com */',
     },
