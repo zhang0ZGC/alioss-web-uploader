@@ -8,10 +8,6 @@ const defaultOptions = {
 };
 
 describe("Client test", () => {
-  beforeAll(() => {
-    Object.assign(global, {location: {protocol: 'http:'}});
-  });
-
   it("generateObjectUrl", () => {
     let client;
 
