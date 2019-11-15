@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  // https://jestjs.io/docs/en/configuration#testenvironment-string
+  // testEnvironment: 'node',
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
