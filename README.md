@@ -14,14 +14,28 @@
 > 更多浏览器支持可参阅相关官方文档提供的方案： [JavaScript客户端签名直传](https://help.aliyun.com/document_detail/31925.html)
 
 ## 安装
+
+### 使用 yarn 或 npm 安装
 ```shell script
 yarn add alioss-web-uploader
 ```
-or
 
 ```shell script
 npm install alioss-web-uploader
 ```
+
+### 浏览器直接引入
+在浏览器使用 `script` 标签直接引入 js 文件， 并使用全局变量 `AliOSSWebUploader`。
+
+发布包内 `dist` 目录提供了 `alioss-web-uploader.js` 及 `alioss-web-uploader.min.js`。
+
+或者使用公共 CDN：
+
+[![alioss-web-uploader](https://data.jsdelivr.com/v1/package/npm/alioss-web-uploader/badge)](https://www.jsdelivr.com/package/npm/alioss-web-uploader)
+> https://cdn.jsdelivr.net/npm/alioss-web-uploader/dist/alioss-web-uploader.min.js
+
+[UNPKG](https://unpkg.com/alioss-web-uploader/dist/)
+> https://unpkg.com/alioss-web-uploader/dist/alioss-web-uploader.min.js
 
 ## 使用
 
@@ -69,7 +83,7 @@ const client = new oss({
   * [x-oss-meta-*] 用户指定的 user meta 值。
   * [x-oss-*] 
   * [更多参数](https://help.aliyun.com/document_detail/31988.html)
-  * [headers] {Object} 上传的 object header 信息，详情见 [RFC2616][^RFC2616] 
+  * [headers] {Object} object header 信息，用以指定下载时的 headers，详情见 [RFC2616][^RFC2616] 
   ([中文][^RFC2616_ZH])
     * 'Cache-Control' cache control for download, e.g.: Cache-Control: public, no-cache
     * 'Content-Disposition' object name for download, e.g.: Content-Disposition: somename
