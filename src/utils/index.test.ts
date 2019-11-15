@@ -16,9 +16,18 @@ describe("utils test", () => {
   });
 
   it('isHttpsProtocol', function () {
-    Object.assign(global, {location: {protocol: 'http:'}});
+    const location = JSON.stringify(window.location);
+    delete window.location;
+    Object.defineProperty(window, 'location', {
+      value: JSON.parse(location)
+    });
+
     expect(isHttpsProtocol()).toBeFalsy();
-    Object.assign(global, {location: {protocol: 'https:'}});
+
+    Object.defineProperty(window.location, 'protocol', {
+      value: 'https:',
+      configurable: true
+    });
     expect(isHttpsProtocol()).toBeTruthy();
   });
 
