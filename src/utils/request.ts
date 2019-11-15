@@ -18,6 +18,7 @@ export interface RequestOptions {
   onError: (error, body?: object) => void;
   // onSuccess: (body: object, xhr: XMLHttpRequest) => void;
   onSuccess: (result, xhr: XMLHttpRequest) => void;
+  onAbort?: () => void;
   data: Document | BodyInit | null;
   // filename?: string; // XXX
   // file?: File;  // XXX
@@ -103,11 +104,7 @@ export default function request (url: string, options: RequestOptions) {
     options.onError(err);
   };
 
-  /*
-  xhr.onabort = function timeout(e){
-    options.onError(e);
-  };
-  */
+  if (options.onAbort) xhr.onabort = options.onAbort;
 
   xhr.open(options.method || 'get', url, true);
 
