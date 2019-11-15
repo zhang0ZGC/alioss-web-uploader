@@ -28,13 +28,15 @@ export interface RequestOptions {
   timeout?: number;
 }
 
+type RequestError = Error & {status?: number; method?: string; url?: string; code?:string};
+
 function getError(url, option, xhr) {
   const codePart = xhr.response.match(/<Code>(.+)<\/Code>/);
   // const messagePart = xhr.response.match(/<Message>(.+)<\/<Message>>/);
 
   const method = option.method || 'GET';
-  const msg = `[${xhr.status}] ${method} ${url}': ${codePart && codePart[1] || ''}`;
-  const err: Error & {status?: number; method?: string; url?: string; code?:string} = new Error(msg);
+  const msg = `[${xhr.status}] ${method} ${url}: ${codePart && codePart[1] || ''}`;
+  const err: RequestError = new Error(msg);
   err.status = xhr.status;
   err.method = method;
   err.code = codePart && codePart[1] || '';
