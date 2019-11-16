@@ -1,4 +1,4 @@
-import {escapeName, isHttpsProtocol, objectName, typeOf} from "./index";
+import {escapeName, isHttpsProtocol, objectName, typeOf} from "../../src/utils";
 
 describe("utils test", () => {
   it("objectName test", () => {

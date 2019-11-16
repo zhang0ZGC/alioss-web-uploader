@@ -1,4 +1,4 @@
-import request, {RequestOptions} from "./request";
+import request, {RequestOptions} from "../../src/utils/request";
 import sinon, {SinonFakeXMLHttpRequest} from "sinon";
 
 let xhr: sinon.SinonFakeXMLHttpRequestStatic;

@@ -1,4 +1,4 @@
-import {authorization, buildCanonicalizedResource, buildCanonicalString, computeSignature} from "./signUtils";
+import {authorization, buildCanonicalizedResource, buildCanonicalString, computeSignature} from "../../src/utils/signUtils";
 
 describe("signUtils", () => {
   it("buildCanonicalizedResource", () => {
