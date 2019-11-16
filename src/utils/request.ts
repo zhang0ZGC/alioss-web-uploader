@@ -19,7 +19,7 @@ export interface RequestOptions {
   // onSuccess: (body: object, xhr: XMLHttpRequest) => void;
   onSuccess: (result, xhr: XMLHttpRequest) => void;
   onAbort?: () => void;
-  data: Document | BodyInit | null;
+  data?: Document | BodyInit | null;
   // filename?: string; // XXX
   // file?: File;  // XXX
   withCredentials?: boolean;
@@ -36,7 +36,8 @@ function getError(url, option, xhr) {
   // const messagePart = xhr.response.match(/<Message>(.+)<\/<Message>>/);
 
   const method = option.method || 'GET';
-  const msg = `[${xhr.status}] ${method} ${url}: ${codePart && codePart[1] || ''}`;
+  let msg = `[${xhr.status}] ${method} ${url}`;
+  if (codePart && codePart[1]) msg += `: ${codePart[1]}`;
   const err: RequestError = new Error(msg);
   err.status = xhr.status;
   err.method = method;
@@ -65,9 +66,7 @@ export default function request (url: string, options: RequestOptions) {
 
   if (options.onProgress && xhr.upload){
     xhr.upload.onprogress = function progress(e: UploadProgressEvent) {
-      if (e.total > 0) {
-        e.percent = e.loaded / e.total * 100;
-      }
+      e.percent = e.loaded / e.total * 100;
       options.onProgress(e);
     }
   }
