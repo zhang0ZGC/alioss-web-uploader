@@ -7,7 +7,7 @@ function getOssParams(params, extendKeys=[]){
   const out = {};
   Object.keys(params).forEach(key => {
     const lowerKey = key.toLowerCase();
-    if (lowerKey.substr(0, 6) === 'x-oss-' || extendKeys.indexOf(key)>-1){
+    if (/^x-oss-/.test(lowerKey) || extendKeys.indexOf(key)>-1){
       out[lowerKey] = params[key];
     }
   });
