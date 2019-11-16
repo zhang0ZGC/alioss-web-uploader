@@ -8,11 +8,6 @@ const emptyFunc = (ret?) => {};
 const getInitialOptions = (): RequestOptions => ({
   onSuccess: emptyFunc,
   onError: emptyFunc,
-  onProgress: emptyFunc,
-  headers: {
-    hello: 'world'
-  },
-  data: new FormData(),
 });
 let options: RequestOptions = getInitialOptions();
 
@@ -47,9 +42,11 @@ describe("request", () => {
     requests[0].respond(204, {}, '');
   });
 
-  it('40x should be error', done => {
+  it('40x with should be error', done => {
     options.onError = e => {
-      expect(e.toString()).toContain('[404]');
+      // expect(e.toString()).toContain('[404]');
+      expect(e.message).toEqual('[404] GET test.do: NoSuchBucket');
+      expect(e.code).toEqual('NoSuchBucket');
       done();
     };
     options.onSuccess = () => done('404 should throw error');
@@ -78,10 +75,36 @@ describe("request", () => {
     requests[0].respond(404, {}, content[404])
   });
 
+  it('50x with simple text', done => {
+    options.onError = e => {
+      expect(e.message).toEqual('[500] GET test.do');
+      expect(e.code).toEqual('');
+      done();
+    };
+    options.onSuccess = () => done('50x should throw error');
+    request('test.do', options);
+    const content = 'Server 500';
+    requests[0].respond(500, {}, content)
+  });
+
   it('upload should be success', done => {
     const data = new FormData();
     data.append('key', 'foo/bar.jpg');
     data.append('signature', 'sfasdshgfdsfkjnb4i5sfkjvn');
+    data.append('file', new File(['hello world'], 'test.txt', {type: 'text/plain'}));
+    options.data = data;
+    options.method = 'POST';
+    options.onSuccess = () => done();
+    options.onError = () => done('upload should be success');
+
+    request('test.do', options);
+    requests[0].respond(240, {}, '');
+  });
+
+  it('upload progress works', done => {
+    const data = new FormData();
+    data.append('key', 'foo/bar.jpg');
+    data.append('signature', '123456879156');
     data.append('file', new File(['hello world'], 'test.txt', {type: 'text/plain'}));
     options.data = data;
     options.method = 'POST';
@@ -130,9 +153,25 @@ describe("request", () => {
   });
 
   it('request headers', function () {
+    options.headers = {hello: 'world'};
+
     request('test.do', options);
     expect(requests[0].requestHeaders).toEqual({
+      "Content-Type": "text/plain;charset=utf-8",
       'X-Requested-With': 'XMLHttpRequest',
+      hello: 'world',
+    });
+
+    options.headers = {'X-Requested-With': null, hello: 'world'};
+    request('test.do', options);
+    expect(requests[1].requestHeaders).toEqual({
+      "Content-Type": "text/plain;charset=utf-8",
+      hello: 'world',
+    });
+
+    options.data = new FormData();
+    request('test.do', options);
+    expect(requests[2].requestHeaders).toEqual({
       hello: 'world',
     });
   });
