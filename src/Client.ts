@@ -89,7 +89,7 @@ class Client {
       // if set custom endpoint
     } else if (opts.region) {
       opts.endpoint = opts.bucket;
-      if (opts.internal) opts.endpoint += '-internal';
+      if (opts.internal) opts.region += '-internal';
       opts.endpoint += `.${opts.region}.aliyuncs.com`
     } else {
       throw new Error('require options.endpoint or options.region');
