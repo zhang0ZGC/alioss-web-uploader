@@ -23,7 +23,7 @@ export interface ClientOptions {
    * access secret you create
    */
   accessKeySecret: string;
-  bucket: string;
+  bucket?: string;
   /**
    * used by temporary authorization
    */
@@ -60,6 +60,7 @@ export interface PostObjectOptions {
   onProgress?: (e: UploadProgressEvent) => void;
   onSuccess?: (result: RequestResult) => void;
   onError?: (e: Error) => void;
+  onAbort?: () => void;
   success_action_status?: 200|201|204;
   success_action_redirect?: string;
   'x-oss-object-acl'?: 'private' | 'public-read' | 'public-read-write';
@@ -84,15 +85,14 @@ class Client {
       ...options,
       host: '',
     };
-    if (!opts.bucket) throw new Error('bucket is required.');
     if (opts.endpoint) {
       // if set custom endpoint
-    } else if (opts.region) {
+    } else if (opts.region && opts.bucket) {
       opts.endpoint = opts.bucket;
       if (opts.internal) opts.region += '-internal';
       opts.endpoint += `.${opts.region}.aliyuncs.com`
     } else {
-      throw new Error('require options.endpoint or options.region');
+      throw new Error('require endpoint or region/bucket in options');
     }
     // 一般情况下不需要设置 `secure` 参数，唯一需要用到的场景可能就是在 http 页面中使用 https 连接了
     opts.host += `http${opts.secure === true || isHttpsProtocol() ? 's' : ''}://${opts.endpoint}`;
@@ -153,14 +153,16 @@ class Client {
 
     data.append('file', file);
 
+    const emptyFunc = function () {};
     const reqOptions: RequestOptions = {
       method: 'POST',
       data,
       timeout: options.timeout || this.opts.timeout,
-      onSuccess: options.onSuccess || function(){},
+      onSuccess: options.onSuccess || emptyFunc,
       onError: options.onError || function (e) {
         console.error(e);
       },
+      onAbort: options.onAbort || emptyFunc,
       // withCredentials: true,
     };
     if (options.onProgress) reqOptions.onProgress = options.onProgress;
