@@ -1,6 +1,6 @@
 {
   "name": "alioss-web-uploader",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Upload file or add object to Ali OSS in browser.",
   "keywords": [
     "alioss",
@@ -53,7 +53,8 @@
     "src",
     "types",
     "tsconfig.json",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "sideEffects": false
 }
