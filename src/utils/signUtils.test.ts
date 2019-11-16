@@ -39,6 +39,12 @@ application/octet-stream
 ${date}
 x-oss-abc:testheader
 x-oss-date:${date}
+/test.do?a=1&b=123`,
+      `PUT
+application/octet-stream
+${date}
+x-oss-abc:testheader
+x-oss-date:${date}
 /test.do?a=1&b=123`
     ];
 
