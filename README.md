@@ -43,14 +43,16 @@ npm install alioss-web-uploader
 __options__：
 * accessKeyId {String}
 * accessKeySecret {String}
-* bucket {String} the bucket you want to access
-* [stsToken] {String} used by temporary authorization, detail [see](https://www.alibabacloud.com/help/doc-detail/32077.htm)
-* [endpoint] {String} oss region domain. It takes priority over region.
-* [region] {String} default `oss-cn-hangzhou`, see [Data Regions](https://github.com/ali-sdk/ali-oss#data-regions)
-* [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。 **注意：不要在 HTTPS 页面中设置为 `false`**（设置了也没用）
-* [timeout] {Number} default 300_000
-* ~~[cname] {String} default false, access oss with custom domain name. if true, you can fill endpoint field with your custom domain name~~
-* [internal] {Boolean} default false
+* **[bucket]?** {String} Bucket 名称，选择性必填，必须与 `region` 同时指定。
+* **[region]?** {String} 地域，默认 `oss-cn-hangzhou` , 详情 [Data Regions](https://github.com/ali-sdk/ali-oss#data-regions)
+* **[endpoint]?** {String} 自定义域名，如果指定则忽略 `bucket` 及 `region` 设置，前面不加 `http(s)://`。（此项与官方 SDK 不同， 意义与官方文档有差异，未来可能会改变，请尽量使用`bucket` 与 `region`）
+* [stsToken] {String} used by temporary authorization, 强烈建议使用此参数, [查看详情](https://www.alibabacloud.com/help/doc-detail/32077.htm)
+* [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。 **注意：不要在 HTTPS 页面中设置为 `false`**（设置了也没用，不可以在 https 页面中使用 http）
+* [timeout] {Number} 请求超时时间，默认 `300_000` ( 300 s )
+
+[^_^]: # (* [internal] {Boolean} default false)
+[^_^]: # (* [cname] {String} default false, access oss with custom domain name. if true, you can fill endpoint field with your custom domain name)
+
   
 参数详情查看 [配置项](https://help.aliyun.com/document_detail/64095.html).
 
@@ -76,6 +78,7 @@ const client = new oss({
   * [onProgress] {Function} 上传进度回调。(IE 系列因不支持 `xhr.upload` 属性，所以回调不会被执行)
   * [onSuccess] {Function} 成功回调
   * [onError] {Function} 错误回调
+  * [onAbort] {Function} 中断上传回调
   * [timeout] {Number} 超时时间，单位 ms, 默认 `client.opts.timeout` 300s
   * [policy] {Object|String} policy 对象或 json 字符串的 base64
   * [signature] {String} policyBase64 签名，通常不需要传，因为会自动计算签名
