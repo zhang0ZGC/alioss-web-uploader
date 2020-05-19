@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.1
+`2020-05-19`
+- :star: 修改错误信息内容，返回阿里云返回的 Code+Message 信息
+- 修改 postObject 接口的 policy.expiration 值
+
 ## 1.1.0
 `2019-11-16`
 
