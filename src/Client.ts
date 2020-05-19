@@ -14,6 +14,12 @@ function getOssParams(params, extendKeys=[]){
   return out;
 }
 
+// @link https://help.aliyun.com/document_detail/31837.html?spm=a2c4g.11186623.2.15.169769cbIq4eNn#concept-zt4-cvy-5db
+type Region = 'oss-cn-hangzhou' | 'oss-cn-shanghai' | 'oss-cn-qingdao' | 'oss-cn-beijing' | 'oss-cn-zhangjiakou'
+  | 'oss-cn-huhehaote' | 'oss-cn-shenzhen' | 'oss-cn-heyuan' | 'oss-cn-chengdu' | 'oss-cn-hongkong' | 'oss-us-west-1'
+  | 'oss-us-east-1' | 'oss-ap-southeast-1' | 'oss-ap-southeast-2' | 'oss-ap-southeast-3' | 'oss-ap-southeast-5'
+  | 'oss-ap-northeast-1' | 'oss-ap-south-1' | 'oss-eu-central-1' | 'oss-eu-west-1' | 'oss-me-east-1' | string;
+
 export interface ClientOptions {
   /**
    * access key you create on aliyun console website
@@ -35,7 +41,7 @@ export interface ClientOptions {
   /**
    * the bucket data region location, default is `oss-cn-hangzhou`
    */
-  region?: string;
+  region?: Region;
   /**
    * access OSS with aliyun internal network or not, default is false. If your servers are running on aliyun too,
    * you can set true to save lot of money.
