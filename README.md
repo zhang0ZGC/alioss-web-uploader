@@ -45,7 +45,7 @@ __options__：
 * accessKeySecret {String}
 * **[bucket]?** {String} Bucket 名称，选择性必填，必须与 `region` 同时指定。
 * **[region]?** {String} 地域，默认 `oss-cn-hangzhou` , 详情 [Data Regions](https://github.com/ali-sdk/ali-oss#data-regions)
-* **[endpoint]?** {String} 自定义域名，如果指定则忽略 `bucket` 及 `region` 设置，前面不加 `http(s)://`。（此项与官方 SDK 不同， 意义与官方文档有差异，未来可能会改变，请尽量使用`bucket` 与 `region`）
+* **[endpoint]?** {String} 与bucket绑定的自定义域名，如果指定则忽略 `bucket` 及 `region` 设置，前面不加 `http(s)://`。
 * [stsToken] {String} used by temporary authorization, 强烈建议使用此参数, [查看详情](https://www.alibabacloud.com/help/doc-detail/32077.htm)
 * [secure] {Boolean} default undefined. 默认会根据 `location.protocol` 自动选择是否使用 https 。一般不需要设置，除非需要在 http 页面中使用 https 上传。 **注意：不要在 HTTPS 页面中设置为 `false`**（设置了也没用，不可以在 https 页面中使用 http）
 * [timeout] {Number} 请求超时时间，默认 `300_000` ( 300 s )
@@ -119,7 +119,8 @@ __在浏览器中直接使用__ 见 `example` 文件夹或查看 [在线 demo][^
 
 ```js
 client.generateObjectUrl('hello/world.txt');
-// => http://${bucketname}.${endpoint}hello/world.txt
+// => http(s)://${bucket}.${region}.aliyuncs.com/hello/world.txt
+// => http(s)://${endpoint}/hello/world.txt (if endpoint is provided )
 
 client.generateObjectUrl('hello/world.txt', 'http://mycdn.domain.com');
 // => http://mycdn.domain.com/hello/world.txt
