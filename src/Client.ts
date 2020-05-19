@@ -128,7 +128,7 @@ class Client {
         policyBase64 = options.policy;
       } else{
         const policy = {
-          "expiration": new Date(+new Date() + 24 * 3600 * 7).toISOString(),
+          "expiration": new Date(+new Date() + 24 * 3600 * 1000).toISOString(),
           "conditions": [
             {"bucket": this.opts.bucket},
             {"key": objectName(name)}, // equals to ["eq", "$key", objectName(name)],
