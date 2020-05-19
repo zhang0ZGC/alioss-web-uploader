@@ -45,7 +45,7 @@ describe("request", () => {
   it('40x with should be error', done => {
     options.onError = e => {
       // expect(e.toString()).toContain('[404]');
-      expect(e.message).toEqual('[404] GET test.do: NoSuchBucket');
+      expect(e.message).toEqual('NoSuchBucket: The specified bucket does not exist.');
       expect(e.code).toEqual('NoSuchBucket');
       done();
     };
@@ -77,7 +77,8 @@ describe("request", () => {
 
   it('50x with simple text', done => {
     options.onError = e => {
-      expect(e.message).toEqual('[500] GET test.do');
+      expect(e.status).toEqual(500);
+      expect(e.message).toEqual('');
       expect(e.code).toEqual('');
       done();
     };

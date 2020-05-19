@@ -84,7 +84,7 @@ describe("Client test", () => {
 
     it('upload error with default console.error', done => {
       console.error = msg => {
-        expect(msg.message).toContain('[400] POST');
+        expect(msg.status).toEqual(400);
         done();
       };
       let client = new Client(clientOptions);

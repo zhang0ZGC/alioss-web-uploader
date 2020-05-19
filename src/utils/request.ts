@@ -33,11 +33,13 @@ type RequestError = Error & {status?: number; method?: string; url?: string; cod
 
 function getError(url, option, xhr) {
   const codePart = xhr.response.match(/<Code>(.+)<\/Code>/);
-  // const messagePart = xhr.response.match(/<Message>(.+)<\/<Message>>/);
+  const messagePart = xhr.response.match(/<Message>(.+)<\/Message>/);
 
   const method = option.method || 'GET';
-  let msg = `[${xhr.status}] ${method} ${url}`;
-  if (codePart && codePart[1]) msg += `: ${codePart[1]}`;
+  // let msg = `[${xhr.status}] ${method} ${url}`;
+  let msg = '';
+  if (codePart && codePart[1]) msg += `${codePart[1]}: `;
+  if (messagePart && messagePart[1]) msg += messagePart[1];
   const err: RequestError = new Error(msg);
   err.status = xhr.status;
   err.method = method;
