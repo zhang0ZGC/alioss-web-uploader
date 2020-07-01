@@ -80,7 +80,7 @@ const client = new oss({
   * [onError] {Function} 错误回调
   * [onAbort] {Function} 中断上传回调
   * [timeout] {Number} 超时时间，单位 ms, 默认 `client.opts.timeout` 300s
-  * [policy] {Object|String} policy 对象或 json 字符串的 base64
+  * [policy] {Object|String} [policy 对象][^post_policy]或 json 字符串的 base64
   * [signature] {String} policyBase64 签名，通常不需要传，因为会自动计算签名
   * [x-oss-object-acl] {String} 指定 OSS 创建 Object 时的访问权限。合法值：public-read、private、public-read-write
   * [x-oss-meta-*] 用户指定的 user meta 值。
@@ -138,3 +138,4 @@ client.generateObjectUrl('hello/world.txt', 'http://mycdn.domain.com');
 [^demo_online]: https://unpkg.com/alioss-web-uploader/example/index.html
 [^RFC2616]: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 [^RFC2616_ZH]: https://www.cnblogs.com/k1988/archive/2010/01/12/2165683.html
+[^post_policy]: https://help.aliyun.com/document_detail/31988.html#title-5go-s2f-dnw
