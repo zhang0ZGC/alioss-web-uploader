@@ -1,6 +1,6 @@
 {
   "name": "alioss-web-uploader",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Upload file or add object to Ali OSS in browser.",
   "keywords": [
     "alioss",
