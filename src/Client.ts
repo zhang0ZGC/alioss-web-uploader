@@ -61,7 +61,7 @@ export interface ClientOptions {
 
 export interface PostObjectOptions {
   dir?: string;
-  policy?: string | {[key: string]: any};
+  policy?: string | {expiration: string; conditions: any[]};
   signature?: string;
   timeout?: number;
   onProgress?: (e: UploadProgressEvent) => void;
@@ -119,7 +119,6 @@ class Client {
    * @param options
    */
   public postObject(name: string, file: File | Blob, options: PostObjectOptions={}) {
-    if (!options.policy) options.policy = {};
     let policyBase64;
 
     const data = new FormData();
