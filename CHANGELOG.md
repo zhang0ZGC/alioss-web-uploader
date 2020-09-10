@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.0
+`2020-09-10`
+- :star2: postObject 添加 `dir` 参数支持
+
 ## 1.1.1
 `2020-05-19`
 - :star: 修改错误信息内容，返回阿里云返回的 Code+Message 信息

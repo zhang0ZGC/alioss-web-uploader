@@ -75,6 +75,7 @@ const client = new oss({
 * name {string} 对象名称
 * file {File|Blob} 上传的 Blob 或 html5 File
 * [options] {Object} 可选参数
+  * [dir] {String} 上传目录,可选(^1.2.0版本开始支持)
   * [onProgress] {Function} 上传进度回调。(IE 系列因不支持 `xhr.upload` 属性，所以回调不会被执行)
   * [onSuccess] {Function} 成功回调
   * [onError] {Function} 错误回调
