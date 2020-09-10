@@ -129,16 +129,26 @@ idGVzdD0tYnVja2V0In0seyJrZXkiOiJmb28uanBnIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw
     it('upload with dir', function () {
       let requestBody;
       const client = new Client(defaultOptions);
+
+      // # 1
       client.postObject(file.name, file, {
         dir: 'bar',
       })
       requestBody = requests[0].requestBody as unknown as FormData;
       expect(requestBody.get('key')).toBe('bar/foo.jpg');
 
+      // #2
       client.postObject(file.name, file, {
-        dir: '/foo/bar/',
+        dir: 'foo/bar/',
       })
-      requestBody = requests[0].requestBody as unknown as FormData;
+      requestBody = requests[1].requestBody as unknown as FormData;
+      expect(requestBody.get('key')).toBe('foo/bar/foo.jpg');
+
+      // #3
+      client.postObject(file.name, file, {
+        dir: '/foo/bar//',
+      })
+      requestBody = requests[2].requestBody as unknown as FormData;
       expect(requestBody.get('key')).toBe('foo/bar/foo.jpg');
     })
   });
