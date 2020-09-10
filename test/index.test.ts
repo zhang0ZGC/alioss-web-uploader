@@ -124,8 +124,23 @@ idGVzdD0tYnVja2V0In0seyJrZXkiOiJmb28uanBnIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw
       requestBody = requests[1].requestBody as unknown as FormData;
       expect(requestBody.get('success_action_status')).toBe(options['success_action_status'].toString());
       expect(requestBody.get('x-oss-meta-filename')).toBe(options['x-oss-meta-filename']);
-
     });
+
+    it('upload with dir', function () {
+      let requestBody;
+      const client = new Client(defaultOptions);
+      client.postObject(file.name, file, {
+        dir: 'bar',
+      })
+      requestBody = requests[0].requestBody as unknown as FormData;
+      expect(requestBody.get('key')).toBe('bar/foo.jpg');
+
+      client.postObject(file.name, file, {
+        dir: '/foo/bar/',
+      })
+      requestBody = requests[0].requestBody as unknown as FormData;
+      expect(requestBody.get('key')).toBe('foo/bar/foo.jpg');
+    })
   });
 
   it('initial test', () => {

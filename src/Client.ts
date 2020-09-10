@@ -60,6 +60,7 @@ export interface ClientOptions {
 }
 
 export interface PostObjectOptions {
+  dir?: string;
   policy?: string | {[key: string]: any};
   signature?: string;
   timeout?: number;
@@ -127,7 +128,8 @@ class Client {
       data.append(key, options.headers[key].toString());
     });
 
-    data.append('key', objectName(name));
+    const objectKey = objectName((options.dir || '').replace(/^(.+?)\/*$/, '$1/') + objectName(name));
+    data.append('key', objectKey);
 
     if (this.opts.accessKeyId && this.opts.accessKeySecret){
       if (typeof options.policy === 'string'){
@@ -137,7 +139,7 @@ class Client {
           "expiration": new Date(+new Date() + 24 * 3600 * 1000).toISOString(),
           "conditions": [
             {"bucket": this.opts.bucket},
-            {"key": objectName(name)}, // equals to ["eq", "$key", objectName(name)],
+            {"key": objectKey}, // equals to ["eq", "$key", objectName(name)],
             ["content-length-range", 0, 1024 * 1024 * 1024],
           ],
           ...options.policy,
